@@ -2,14 +2,11 @@ package br.com.romario.todosimple.services;
 
 import java.util.Optional;
 
-import javax.management.RuntimeErrorException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.romario.todosimple.models.User;
-import br.com.romario.todosimple.repositories.TaskRepository;
 import br.com.romario.todosimple.repositories.UserRepository;
 
 @Service
@@ -17,9 +14,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
@@ -32,7 +26,6 @@ public class UserService {
     public User create(User obj) {
         obj.setId(null);
         obj = userRepository.save(obj);
-        taskRepository.saveAll(obj.getTasks());
         return obj;
     }
 
