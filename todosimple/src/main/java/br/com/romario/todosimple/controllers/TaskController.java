@@ -17,6 +17,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.romario.todosimple.models.Task;
 import br.com.romario.todosimple.services.TaskService;
+import br.com.romario.todosimple.services.UserService;
 import jakarta.validation.Valid;
 
 @RestController
@@ -26,6 +27,9 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Task> findById(@PathVariable Long id) { 
         Task obj = taskService.findById(id);
@@ -34,6 +38,7 @@ public class TaskController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Task>> findAllByUserId(@PathVariable Long userId) {
+        userService.findById(userId);
         List<Task> list = taskService.findAllByUserId(userId);
         return ResponseEntity.ok().body(list);
     }
