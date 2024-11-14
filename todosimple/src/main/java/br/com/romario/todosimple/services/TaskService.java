@@ -1,5 +1,6 @@
 package br.com.romario.todosimple.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class TaskService {
         return obj.orElseThrow(() -> new  RuntimeException(
             "Tarefa não encontrado! Id: " + id + ", Tipo: " + Task.class.getName()
         ));
+    }
+
+    public List<Task> findAllByUserId(Long userId) {
+        return taskRepository.findByUserId(userId);
     }
 
     @Transactional
