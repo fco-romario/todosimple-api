@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.romario.todosimple.models.Task;
 import br.com.romario.todosimple.models.User;
 import br.com.romario.todosimple.repositories.TaskRepository;
-import br.com.romario.todosimple.repositories.UserRepository;
 
 @Service
 public class TaskService {
