@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.romario.todosimple.models.User;
 import br.com.romario.todosimple.repositories.UserRepository;
+import br.com.romario.todosimple.services.exceptions.DataBindingViolationException;
+import br.com.romario.todosimple.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -17,7 +19,7 @@ public class UserService {
 
     public User findById(Long id) {
         Optional<User> obj = userRepository.findById(id);
-        return obj.orElseThrow(() -> new RuntimeException(
+        return obj.orElseThrow(() -> new ObjectNotFoundException(
             "Usuário não encontrado! Id: " + id + ", Tipo: " + User.class.getName()
         ));
     }
@@ -41,7 +43,7 @@ public class UserService {
         try {
             userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Não foi possível excluir. Há entidades relacionada a este usuário!");
+            throw new DataBindingViolationException("Não foi possível excluir. Há entidades relacionada a este usuário!");
         }
         
     }

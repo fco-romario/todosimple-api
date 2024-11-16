@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.romario.todosimple.models.Task;
 import br.com.romario.todosimple.models.User;
 import br.com.romario.todosimple.repositories.TaskRepository;
+import br.com.romario.todosimple.services.exceptions.DataBindingViolationException;
 
 @Service
 public class TaskService {
@@ -49,7 +50,11 @@ public class TaskService {
 
     public void delete(Long id) {
         Task obj = findById(id);
-        taskRepository.delete(obj);
+        try {
+            taskRepository.delete(obj);
+        } catch (Exception e) {
+            throw new DataBindingViolationException("Não foi possível excluir. Há entidades relacionada a este usuário!");
+        }
     }
 }   
 
